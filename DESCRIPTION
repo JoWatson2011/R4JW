@@ -14,3 +14,5 @@ LazyData: true
 RoxygenNote: 7.0.2
 Imports: 
     msm
+URL: https://github.com/JoWatson2011/R4JW
+BugReports: https://github.com/JoWatson2011/R4JW/issues
