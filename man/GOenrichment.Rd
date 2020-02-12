@@ -13,14 +13,6 @@ GOenrichment(
 )
 }
 \arguments{
-\item{GO.clust}{}
-
-\item{sample}{}
-
-\item{HeLa.bkgd}{}
-
-\item{HeLa.GO}{}
-
 \item{p}{}
 }
 \value{

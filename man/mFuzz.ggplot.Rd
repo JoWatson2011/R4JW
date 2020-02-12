@@ -21,6 +21,3 @@ list containing ggplot object and dataframe of clustering values
 \description{
 From Jamie Soul; adapted from jspaezp on GitHub
 }
-\examples{
-data <- matrix(rnorm(1:300), nrow = 100, ncol = 3)
-}
