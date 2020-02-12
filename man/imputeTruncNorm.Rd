@@ -14,6 +14,8 @@ imputed values
 }
 \description{
 The default represents a stimulation to represent a population
+
+below the limits of detection, as described in Tyanova et al., 2016
 }
 \examples{
 foo <- rnorm(100)

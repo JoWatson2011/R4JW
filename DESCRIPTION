@@ -13,6 +13,21 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.0.2
 Imports: 
-    msm
+    msm,
+    biomaRt,
+    igraph,
+    STRINGdb,
+    dplyr,
+    magrittr,
+    ggraph,
+    ggplot2,
+    RColorBrewer,
+    topGO,
+    AnnotationDbi,
+    GO.db,
+    GOSemSim,
+    org.Hs.eg.db,
+    tidyr,
+    utils
 URL: https://github.com/JoWatson2011/R4JW
 BugReports: https://github.com/JoWatson2011/R4JW/issues

@@ -1,6 +1,6 @@
 #' Title Impute Data by drawing randomly from a distribution
 #' @description The default represents a stimulation to represent a population
-#' @describeton below the limits of detection, as described in Tyanova et al., 2016
+#' @description below the limits of detection, as described in Tyanova et al., 2016
 #' @param v a vector containing NA
 #'
 #' @return imputed values
