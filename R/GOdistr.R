@@ -4,17 +4,17 @@
 #' @param genes vector of hgnc gene names
 #' @param annots output of annotateGO()
 #'
-#' @importFrom dplyr select
+#' @importFrom dplyr select group_by summarise arrange
+#' @importFrom rlang .data
 #' @export
 #' @return dataframe of GO term counts
 #'
-GOdistr <- function(genes, annots = annotations){
-
-  distr <- annots %>% dplyr::select(SYMBOL, TERM) %>%
-    filter(SYMBOL %in% genes) %>%
-    group_by(TERM) %>%
-    summarise(SYMBOLS = paste(SYMBOL, collapse=", ")) %>%
-    arrange(TERM)
+GOdistr <- function(genes, annots){
+  distr <- annots %>% dplyr::select(.data$SYMBOL, .data$TERM) %>%
+    filter(.data$SYMBOL %in% genes) %>%
+    group_by(.data$TERM) %>%
+    summarise(SYMBOLS = paste(.data$SYMBOL, collapse=", ")) %>%
+    arrange(.data$TERM)
 
   distr$SYMBOLS <- apply(distr, 1, function(x){
     t <- strsplit(x["SYMBOLS"], ", ")

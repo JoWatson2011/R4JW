@@ -7,8 +7,9 @@
 #'
 #' @return list containing ggplot object and dataframe of clustering values
 #' @importFrom tidyr gather
-#' @importFrom dplyr mutate select
-#' @importFrom ggplot2 ggplot aes geom_line facet_grid geom_hline
+#' @importFrom dplyr mutate select contains
+#' @importFrom ggplot2 ggplot aes geom_line facet_grid geom_hline labs ylab scale_colour_gradient
+#' @importFrom rlang .data
 #' @export
 #'
 mFuzz.ggplot <- function(data, clustering,
@@ -42,8 +43,8 @@ mFuzz.ggplot <- function(data, clustering,
   exp <- exp %>%
     gather(sample,
            expression ,
-           - Identifier,
-           - clusterindex,
+           - .data$Identifier,
+           - .data$clusterindex,
            - contains("membership")) %>%
     mutate(Time = gsub("(\\w*\\D+(?=([0-9]+)))|((?<=\\d)\\D+$)",
                        "",
@@ -53,31 +54,31 @@ mFuzz.ggplot <- function(data, clustering,
     #  the last number in the string z.b. AA00AA00__00 -> 00 else keeps the string
     mutate(Time = gsub("^\\D*$", # this needs to be fixed, bug when seveal character cols ...
                        "0",
-                       Time,
+                       .data$Time,
                        perl = TRUE)) %>%
-    mutate(Time = factor(Time, ordered=T))
+    mutate(Time = factor(.data$Time, ordered=T))
 
   exp$maxMembership <- exp %>%
     dplyr::select(contains("membership")) %>%
-    apply(., 1, max)
+    apply(.data, 1, max)
 
   g <- ggplot(exp,
-              aes(x = Time, y = expression)) +
+              aes(x = .data$Time, y = .data$expression)) +
     geom_line(
-      aes(group = Identifier,
-          colour = maxMembership)
+      aes(group = .data$Identifier,
+          colour = .data$maxMembership)
     ) +
     scale_colour_gradient(low = "white", high = "red")
 
   # Center plotting when centre == TRUE
   if (centre) {
     centers <- clustering$centers %>%
-      data.frame(.,
-                 clusterindex = rownames(.),
+      data.frame(.data,
+                 clusterindex = rownames(.data),
                  stringsAsFactors = F) %>%
-      gather(sample,
-             Centre,
-             - clusterindex) %>%
+      gather(.data$sample,
+             .data$Centre,
+             - .data$clusterindex) %>%
       mutate(Time = gsub("(\\w*\\D+(?=([0-9]+)))|((?<=\\d)\\D+$)",
                          "",
                          sample,
@@ -86,13 +87,13 @@ mFuzz.ggplot <- function(data, clustering,
       #  the last number in the string z.b. AA00AA00__00 -> 00 else keeps the string
       mutate(Time = gsub("^\\D*$", # this needs to be fixed, bug when all character names
                          "0",
-                         Time,
+                         .data$Time,
                          perl = TRUE)) %>%
-      mutate(Time = factor(Time, ordered=T))
-    g <- g + geom_line(data = centers, aes(x = Time, y = Centre))
+      mutate(Time = factor(.data$Time, ordered=T))
+    g <- g + geom_line(data = centers, aes(x = .data$Time, y = .data$Centre))
   }
 
-  g <- g + facet_grid(. ~ clusterindex)
+  g <- g + facet_grid(~ .data$clusterindex)
   g <- g + geom_hline(yintercept = 0,
                       colour="#666666", alpha = 0.5) +
     ylab("Fold change") + labs(fill= "Membership")

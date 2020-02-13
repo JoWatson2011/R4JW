@@ -5,19 +5,17 @@
 #' @importFrom org.Hs.eg.db org.Hs.eg.db org.Hs.egGO2EG
 #' @importFrom GO.db GO.db GOBPCHILDREN
 #' @importFrom GOSemSim godata
-#' @importFrom AnnotationDbi select
+#' @importFrom AnnotationDbi select keys
+#' @importFrom utils stack unstack
+#' @importFrom rlang .data
 #' @export
 #'
 #' @examples simplifyGOReqData()
 simplifyGOReqData <- function(){
-  suppressPackageStartupMessages(library("org.Hs.eg.db"))
-  suppressPackageStartupMessages(library("GO.db"))
-  suppressPackageStartupMessages(library("GOSemSim"))
-
-  gene2GOi<- select(org.Hs.eg.db,
+  gene2GOi<- AnnotationDbi::select(org.Hs.eg.db,
                     keys(org.Hs.egGO2EG),
                     c("ENTREZID", "SYMBOL"),  "GOALL") %>%
-    filter(ONTOLOGYALL == "BP")
+    filter(.data$ONTOLOGYALL == "BP")
   gene2GO <- unstack(gene2GOi[,c(1,5)])
 
   GOterms <- AnnotationDbi::select(GO.db,

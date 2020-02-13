@@ -8,17 +8,16 @@
 #' @importFrom STRINGdb STRINGdb
 #' @importFrom dplyr mutate select filter mutate_all
 #' @importFrom igraph as_data_frame
+#' @importFrom rlang .data
 #' @export
-#'
-#' @examples importSTRINGnw(700)
 importSTRINGnw <- function(conf, speciesID = 9606){
   string_db <- STRINGdb$new(version = "10", species = speciesID, score_threshold = 400, input_directory = "")
   tmp <- string_db$load_all()
   STRING.expmt <- as_data_frame(tmp, what = "edges") %>%
-    filter(experiments > conf) %>%
-    select(protein1 = from, protein2 = to) %>%
-    mutate_all(~ sub("9606.", "", ., fixed = T)) %>%
-    mutate(id = 1:nrow(.))
+    filter(.data$experiments > conf) %>%
+    select(protein1 = .data$from, protein2 = .data$to) %>%
+    mutate_all(~ sub("9606.", "", .data, fixed = T)) %>%
+    mutate(id = 1:nrow(.data))
 
   #ENSEMBL --> GENE name
   ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl" )
@@ -43,7 +42,7 @@ importSTRINGnw <- function(conf, speciesID = 9606){
                              STRING.prot2,
                              by = "id",
                              all = F) %>%
-    filter(!duplicated(id))
+    filter(!duplicated(.data$id))
 
   #remove ensembl ids
   STRING.expmt.gene <- STRING.expmt.gene[,c(2,4)]

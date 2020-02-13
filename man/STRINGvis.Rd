@@ -19,7 +19,3 @@ list of ggraph visualisation and igraph network
 Construct a ggraph visualisation and igraph object
 from HGNC names and STRING network.
 }
-\examples{
-nw <- importSTRINGnw(400)
-STRINGvis(c("MAPK1","MAPK3"), nw)
-}

@@ -14,10 +14,10 @@ annotateGO <- function(k){
   GOid <- AnnotationDbi::select(org.Hs.eg.db,
                                 keys = k, columns = "GO",
                                 keytype = "SYMBOL") %>%
-     filter(ONTOLOGY == "BP") %>%
-     dplyr::select(SYMBOL, GOID = GO)
+     filter(.data$ONTOLOGY == "BP") %>%
+     dplyr::select(.data$SYMBOL, GOID = .data$GO)
 
-  GOterms <- AnnotationDbi::select(GO.db,
+  GOterms <- AnnotationDbi::select(GO.db::GO.db,
                                    keys = GOid$GOID,
                                    columns = c("TERM"),
                                    keytype = "GOID")

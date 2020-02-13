@@ -17,6 +17,3 @@ Edgelist of human STRING network
 \description{
 Title Create network from STRING databases
 }
-\examples{
-importSTRINGnw(700)
-}

@@ -4,19 +4,21 @@
 \alias{GOenrichment}
 \title{Over Representation Analysis}
 \usage{
-GOenrichment(
-  GO.clust,
-  sample,
-  HeLa.bkgd = 12427,
-  HeLa.GO = GO.distr.HeLa,
-  p = 0.05
-)
+GOenrichment(sampleDistr, sampleSize, bkgdDistr, bkgdSize, p = 0.05)
 }
 \arguments{
-\item{p}{}
+\item{sampleDistr}{Output of GOdistr() for sample}
+
+\item{sampleSize}{Size of sample}
+
+\item{bkgdDistr}{Output of GOdistr() for background population}
+
+\item{bkgdSize}{Size of background population}
+
+\item{p}{Significance threshold}
 }
 \value{
-
+Over represented GO terms as df
 }
 \description{
 Calculate over enrichment of GO terms in

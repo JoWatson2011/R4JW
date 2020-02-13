@@ -4,7 +4,7 @@
 \alias{GOdistr}
 \title{Count number of times a term is annotated within gene sample.}
 \usage{
-GOdistr(genes, annots = annotations)
+GOdistr(genes, annots)
 }
 \arguments{
 \item{genes}{vector of hgnc gene names}

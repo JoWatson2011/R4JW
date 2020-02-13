@@ -13,8 +13,6 @@
 #' @importFrom stats na.omit
 #' @export
 #'
-#' @examples nw <- importSTRINGnw(400)
-#' @examples STRINGvis(c("MAPK1","MAPK3"), nw)
 STRINGvis <- function(genes, stringNW){
   pal3 <- brewer.pal(10, "Set3")
   set.seed(1)
@@ -30,7 +28,7 @@ STRINGvis <- function(genes, stringNW){
                           geom_edge_link(colour = pal3[1], edge_width = 1) +
                           geom_node_point(size = 4) +
                           theme_graph() +
-                          geom_node_label(aes(label = name), size = 2.5)
+                          geom_node_label(aes(label = .data$name), size = 2.5)
   )
   return(list(g=g, nw=nw))
 }
