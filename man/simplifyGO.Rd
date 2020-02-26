@@ -4,12 +4,14 @@
 \alias{simplifyGO}
 \title{Title}
 \usage{
-simplifyGO(GORes, simplifyData = simplifyGOReqData())
+simplifyGO(GORes, simplifyData = simplifyGOReqData(), simThresh = 0.4)
 }
 \arguments{
 \item{GORes}{dataframe with columns GOID and TERM}
 
 \item{simplifyData}{output of simplifyGOReqData}
+
+\item{simThresh}{threshold for semantic similarity}
 }
 \value{
 filtered GORes dataframe
