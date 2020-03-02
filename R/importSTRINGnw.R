@@ -8,16 +8,21 @@
 #' @importFrom STRINGdb STRINGdb
 #' @importFrom dplyr mutate select filter mutate_all
 #' @importFrom igraph as_data_frame
+#' @importFrom tibble rownames_to_column
 #' @importFrom rlang .data
+#' @importFrom magrittr `%>%`
 #' @export
 importSTRINGnw <- function(conf, speciesID = 9606){
-  string_db <- STRINGdb$new(version = "10", species = speciesID, score_threshold = 400, input_directory = "")
+  string_db <- STRINGdb$new(version = "10",
+                            species = speciesID,
+                            score_threshold = 400,
+                            input_directory = "")
   tmp <- string_db$load_all()
   STRING.expmt <- as_data_frame(tmp, what = "edges") %>%
     filter(.data$experiments > conf) %>%
     select(protein1 = .data$from, protein2 = .data$to) %>%
     mutate_all(~ sub("9606.", "", .data, fixed = T)) %>%
-    mutate(id = 1:nrow(.data))
+    rownames_to_column(var = "id")
 
   #ENSEMBL --> GENE name
   ensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl" )
