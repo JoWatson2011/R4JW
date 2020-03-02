@@ -26,12 +26,15 @@ GOenrichment <- function(sampleDistr,
 
   failure <- bkgdSize - successes.bkgd  #Number of peptides in background minus the peptides with that term
 
+<<<<<<< HEAD
   sample.size <- sampleSize   # Number of peptides in sample
 
+=======
+>>>>>>> d3733604d9b6a14ba509eff241ad7b1ff0847f14
   sampleDistr$p <- phyper(successes.sample-1,
                           successes.bkgd,
                           failure,
-                          sample.size,
+                          sampleSize,
                           lower.tail = F)
 
   sampleDistr$adjustedP <- p.adjust(sampleDistr$p, method="BH")
