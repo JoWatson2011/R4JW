@@ -12,6 +12,9 @@
 #'
 #' @examples simplifyGOReqData()
 simplifyGOReqData <- function(){
+
+  if(length(grep("simplifyGOreqdata.rds", list.files("data/"))) < 1) {
+
   gene2GOi<- AnnotationDbi::select(org.Hs.eg.db,
                     keys(org.Hs.egGO2EG),
                     c("ENTREZID", "SYMBOL"),  "GOALL") %>%
@@ -39,4 +42,5 @@ simplifyGOReqData <- function(){
               highFreqTerms=highFreqTerms,
               semData = semData,
               childTerms=childTerms))
+  }
 }
